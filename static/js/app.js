@@ -110,13 +110,16 @@ function init() {
         }
       }],
       title: '<b>Belly Button Washing Frequency</b><br>Scrubs Per Week',
+      hovermode: false,
+      width: 600,
+      height: 600
       //xaxis: {visible: false, range: [-1, 1]},
       //yaxis: {visible: false, range: [-1, 1]}
       //xaxis: { visible: true, range: [-1, 1] },
       //yaxis: { visible: true, range: [-1, 1] }
     }
 
-    Plotly.newPlot('gauge', traceGauge, gaugeLayout);
+    Plotly.newPlot('gauge', traceGauge, gaugeLayout,{ modeBarButtons: [["toImage"]] });
   });
 }
 

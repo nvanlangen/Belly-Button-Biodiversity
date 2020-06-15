@@ -63,7 +63,7 @@ function init() {
     var traceGauge = [{
       type: 'pie',
       showlegend: false,
-      hole: 0.4,
+      hole: 0.6,
       rotation: 90,
       values: [1, 1, 1, 1, 1, 1, 1, 1, 1, 9],
       text: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9'],
@@ -79,18 +79,53 @@ function init() {
 
     // needle
     var degrees = 180 - 20 * metadata.wfreq;
-    var radius = .2;
+    var radius = .3;
     var radians = degrees * Math.PI / 180;
     var x = radius * Math.cos(radians) + 0.5;
-    //var x1 = (x-.5) / 2 + 0.5;
     var y = radius * Math.sin(radians) + 0.5;
+
+    var innerDegrees1 = degrees + 90;
+    var innerDegrees2 = degrees - 90;
+    var innerRadius = 0.02;
+
+    var innerRadians1 = innerDegrees1 * Math.PI / 180;
+    var innerx1 = innerRadius * Math.cos(innerRadians1) + 0.5;
+    var innery1 = innerRadius * Math.sin(innerRadians1) + 0.5;
+
+    var innerRadians2 = innerDegrees2 * Math.PI / 180;
+    var innerx2 = innerRadius * Math.cos(innerRadians2) + 0.5;
+    var innery2 = innerRadius * Math.sin(innerRadians2) + 0.5;
 
     console.log(x, y, degrees, radians);
     var gaugeLayout = {
-      shapes: [{
+      shapes: [
+      {
+        type: 'circle',
+        x0: 0.47,
+        y0: 0.47,
+        x1: 0.53,
+        y1: 0.53,
+        fillcolor: 'red',
+        line: {
+          color: 'red',
+          width: 3
+        }
+      },
+      {
         type: 'line',
-        x0: 0.5,
-        y0: 0.5,
+        x0: innerx1,
+        y0: innery1,
+        x1: innerx2,
+        y1: innery2,
+        line: {
+          color: 'red',
+          width: 3
+        }
+      },
+      {
+        type: 'line',
+        x0: innerx1,
+        y0: innery1,
         x1: x,
         y1: y,
         line: {
@@ -99,27 +134,23 @@ function init() {
         }
       },
       {
-        type: 'circle',
-        x0: 0.49,
-        y0: 0.49,
-        x1: 0.51,
-        y1: 0.51,
-        fillcolor: 'red',
+        type: 'line',
+        x0: innerx2,
+        y0: innery2,
+        x1: x,
+        y1: y,
         line: {
-          color: 'red'
+          color: 'red',
+          width: 3
         }
       }],
       title: '<b>Belly Button Washing Frequency</b><br>Scrubs Per Week',
       hovermode: false,
-      width: 600,
-      height: 600
-      //xaxis: {visible: false, range: [-1, 1]},
-      //yaxis: {visible: false, range: [-1, 1]}
-      //xaxis: { visible: true, range: [-1, 1] },
-      //yaxis: { visible: true, range: [-1, 1] }
+      width: 500,
+      height: 500
     }
 
-    Plotly.newPlot('gauge', traceGauge, gaugeLayout,{ modeBarButtons: [["toImage"]] });
+    Plotly.newPlot('gauge', traceGauge, gaugeLayout, { modeBarButtons: [["toImage"]] });
   });
 }
 
@@ -164,15 +195,37 @@ function optionChanged(selectValue) {
 
     //halfpie
     var degrees = 180 - 20 * metadata.wfreq;
-    var radius = .2;
+    var radius = .3;
     var radians = degrees * Math.PI / 180;
     var x = radius * Math.cos(radians) + 0.5;
     var y = radius * Math.sin(radians) + 0.5;
     console.log(x, y, degrees, radians);
 
+    var innerDegrees1 = degrees + 90;
+    var innerDegrees2 = degrees - 90;
+    var innerRadius = 0.02;
+
+    var innerRadians1 = innerDegrees1 * Math.PI / 180;
+    var innerx1 = innerRadius * Math.cos(innerRadians1) + 0.5;
+    var innery1 = innerRadius * Math.sin(innerRadians1) + 0.5;
+
+    var innerRadians2 = innerDegrees2 * Math.PI / 180;
+    var innerx2 = innerRadius * Math.cos(innerRadians2) + 0.5;
+    var innery2 = innerRadius * Math.sin(innerRadians2) + 0.5;
+
     var update = {
-      'shapes[0].x1': x,
-      'shapes[0].y1': y
+      'shapes[1].x1': innerx2,
+      'shapes[1].y1': innery2,
+      'shapes[2].x1': x,
+      'shapes[2].y1': y,
+      'shapes[3].x1': x,
+      'shapes[3].y1': y,
+      'shapes[1].x0': innerx1,
+      'shapes[1].y0': innery1,
+      'shapes[2].x0': innerx1,
+      'shapes[2].y0': innery1,
+      'shapes[3].x0': innerx2,
+      'shapes[3].y0': innery2
     };
 
     Plotly.relayout("gauge", update);

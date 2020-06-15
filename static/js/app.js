@@ -89,12 +89,12 @@ function init() {
     var innerRadius = 0.02;
 
     var innerRadians1 = innerDegrees1 * Math.PI / 180;
-    var innerx1 = innerRadius * Math.cos(innerRadians1) + 0.5;
-    var innery1 = innerRadius * Math.sin(innerRadians1) + 0.5;
+    var innerX0 = innerRadius * Math.cos(innerRadians1) + 0.5;
+    var innerY0 = innerRadius * Math.sin(innerRadians1) + 0.5;
 
     var innerRadians2 = innerDegrees2 * Math.PI / 180;
-    var innerx2 = innerRadius * Math.cos(innerRadians2) + 0.5;
-    var innery2 = innerRadius * Math.sin(innerRadians2) + 0.5;
+    var innerX1 = innerRadius * Math.cos(innerRadians2) + 0.5;
+    var innerY1 = innerRadius * Math.sin(innerRadians2) + 0.5;
 
     console.log(x, y, degrees, radians);
     var gaugeLayout = {
@@ -113,10 +113,10 @@ function init() {
       },
       {
         type: 'line',
-        x0: innerx1,
-        y0: innery1,
-        x1: innerx2,
-        y1: innery2,
+        x0: innerX0,
+        y0: innerY0,
+        x1: innerX1,
+        y1: innerY1,
         line: {
           color: 'red',
           width: 3
@@ -124,8 +124,8 @@ function init() {
       },
       {
         type: 'line',
-        x0: innerx1,
-        y0: innery1,
+        x0: innerX0,
+        y0: innerY0,
         x1: x,
         y1: y,
         line: {
@@ -135,8 +135,8 @@ function init() {
       },
       {
         type: 'line',
-        x0: innerx2,
-        y0: innery2,
+        x0: innerX1,
+        y0: innerY1,
         x1: x,
         y1: y,
         line: {
@@ -206,26 +206,26 @@ function optionChanged(selectValue) {
     var innerRadius = 0.02;
 
     var innerRadians1 = innerDegrees1 * Math.PI / 180;
-    var innerx1 = innerRadius * Math.cos(innerRadians1) + 0.5;
-    var innery1 = innerRadius * Math.sin(innerRadians1) + 0.5;
+    var innerX0 = innerRadius * Math.cos(innerRadians1) + 0.5;
+    var innerY0 = innerRadius * Math.sin(innerRadians1) + 0.5;
 
     var innerRadians2 = innerDegrees2 * Math.PI / 180;
-    var innerx2 = innerRadius * Math.cos(innerRadians2) + 0.5;
-    var innery2 = innerRadius * Math.sin(innerRadians2) + 0.5;
+    var innerX1 = innerRadius * Math.cos(innerRadians2) + 0.5;
+    var innerY1 = innerRadius * Math.sin(innerRadians2) + 0.5;
 
     var update = {
-      'shapes[1].x1': innerx2,
-      'shapes[1].y1': innery2,
+      'shapes[1].x1': innerX1,
+      'shapes[1].y1': innerY1,
       'shapes[2].x1': x,
       'shapes[2].y1': y,
       'shapes[3].x1': x,
       'shapes[3].y1': y,
-      'shapes[1].x0': innerx1,
-      'shapes[1].y0': innery1,
-      'shapes[2].x0': innerx1,
-      'shapes[2].y0': innery1,
-      'shapes[3].x0': innerx2,
-      'shapes[3].y0': innery2
+      'shapes[1].x0': innerX0,
+      'shapes[1].y0': innerY0,
+      'shapes[2].x0': innerX0,
+      'shapes[2].y0': innerY0,
+      'shapes[3].x0': innerX1,
+      'shapes[3].y0': innerY1
     };
 
     Plotly.relayout("gauge", update);

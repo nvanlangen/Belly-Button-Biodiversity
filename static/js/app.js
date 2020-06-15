@@ -2,7 +2,7 @@
 // Called when the page is opened
 function init() {
   // Reads the data from sample.json file
-  d3.json("../../samples.json").then((data) => {
+  d3.json("../.././samples.json").then((data) => {
     // Populates the Subject ID dropdown using an index for the value and name/id for the text
     var idArr = [];
     idArr = data.names;

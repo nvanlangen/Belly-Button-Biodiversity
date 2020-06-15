@@ -31,7 +31,7 @@ function init() {
 
     Plotly.newPlot('bar', barData);
 
-    var trace1 = {
+    var bubbleData = [{
       x: labels,
       y: values,
       text: hovertext,
@@ -40,17 +40,16 @@ function init() {
         color: labels,
         size: values
       }
-    };
+    }];
 
-    var bubbleData = [trace1];
-
-    var layout = {
+    var bubbleLayout = {
       showlegend: false,
       height: 600,
-      width: 800
+      width: 1000,
+      xaxis: { title: "OTU ID" }
     };
 
-    Plotly.newPlot('bubble', bubbleData, layout);
+    Plotly.newPlot('bubble', bubbleData, bubbleLayout);
 
 
     var mData = d3.select("#sample-metadata");
@@ -60,43 +59,71 @@ function init() {
       mData.append("p").text(`${key}: ${value}`);
     });
 
-
-
-    var gaugeData = [
-      {
-        domain: { x: [0, 1], y: [0, 1] },
-        value: metadata.wfreq,
-        title: { text: "Belly Button Washing Frequency" },
-        type: "indicator",
-        mode: "gauge+number",
-        delta: { reference: 400 },
-        gauge: {
-          axis: { range: [null, 9] },
-          steps: [
-            { range: [0, 1], color: "lightgray" },
-            { range: [1, 2], color: "gray" },
-            { range: [2, 3], color: "lightgray" },
-            { range: [3, 4], color: "gray" },
-            { range: [4, 5], color: "lightgray" },
-            { range: [5, 6], color: "gray" },
-            { range: [6, 7], color: "lightgray" },
-            { range: [7, 8], color: "gray" },
-            { range: [8, 9], color: "lightgray" }
-          ]
-        }
+    //half pie
+    var traceGauge = [{
+      type: 'pie',
+      showlegend: false,
+      hole: 0.4,
+      rotation: 90,
+      values: [1, 1, 1, 1, 1, 1, 1, 1, 1, 9],
+      text: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9'],
+      direction: 'clockwise',
+      textinfo: 'text',
+      textposition: 'inside',
+      marker: {
+        colors: ['', '', '', '', '', '', '', '', '', 'white'],
+        labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9'],
+        hoverinfo: 'labels'
       }
-    ];
+    }];
 
-    var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
-    Plotly.newPlot('gauge', gaugeData, layout);
+    // needle
+    var degrees = 180 - 20 * metadata.wfreq;
+    var radius = .2;
+    var radians = degrees * Math.PI / 180;
+    var x = radius * Math.cos(radians) + 0.5;
+    //var x1 = (x-.5) / 2 + 0.5;
+    var y = radius * Math.sin(radians) + 0.5;
 
+    console.log(x, y, degrees, radians);
+    var gaugeLayout = {
+      shapes: [{
+        type: 'line',
+        x0: 0.5,
+        y0: 0.5,
+        x1: x,
+        y1: y,
+        line: {
+          color: 'red',
+          width: 3
+        }
+      },
+      {
+        type: 'circle',
+        x0: 0.49,
+        y0: 0.49,
+        x1: 0.51,
+        y1: 0.51,
+        fillcolor: 'red',
+        line: {
+          color: 'red'
+        }
+      }],
+      title: '<b>Belly Button Washing Frequency</b><br>Scrubs Per Week',
+      //xaxis: {visible: false, range: [-1, 1]},
+      //yaxis: {visible: false, range: [-1, 1]}
+      //xaxis: { visible: true, range: [-1, 1] },
+      //yaxis: { visible: true, range: [-1, 1] }
+    }
+
+    Plotly.newPlot('gauge', traceGauge, gaugeLayout);
   });
 }
 
 function optionChanged(selectValue) {
   d3.json("samples.json").then((data) => {
     // Filter data by matching id for samples to the selectValue
-    
+
     var values = data.samples[selectValue].sample_values;
     var labels = data.samples[selectValue].otu_ids;
     var hovertext = data.samples[selectValue].otu_labels;
@@ -112,17 +139,17 @@ function optionChanged(selectValue) {
 
     // Update values for barchart
     // Use restyle to update bar chart
-    Plotly.restyle("bar","x",[barValues]);
-    Plotly.restyle("bar","y",[utLabels]);
-    Plotly.restyle("bar","text",[barHovertext]);
+    Plotly.restyle("bar", "x", [barValues]);
+    Plotly.restyle("bar", "y", [utLabels]);
+    Plotly.restyle("bar", "text", [barHovertext]);
 
     // Update values for bubbleplot
     // Use restyle to update bubbleplot
     Plotly.restyle("bubble", "x", [labels]);
     Plotly.restyle("bubble", "y", [values]);
     Plotly.restyle("bubble", "text", [hovertext]);
-    
-    
+
+
     // Build metadata based on the filter
     var mData = d3.select("#sample-metadata");
     var metadata = data.metadata[selectValue];
@@ -132,8 +159,20 @@ function optionChanged(selectValue) {
       mData.append("p").text(`${key}: ${value}`);
     });
 
-    // Gauge
-    Plotly.restyle("gauge", "value",metadata.wfreq);
+    //halfpie
+    var degrees = 180 - 20 * metadata.wfreq;
+    var radius = .2;
+    var radians = degrees * Math.PI / 180;
+    var x = radius * Math.cos(radians) + 0.5;
+    var y = radius * Math.sin(radians) + 0.5;
+    console.log(x, y, degrees, radians);
+
+    var update = {
+      'shapes[0].x1': x,
+      'shapes[0].y1': y
+    };
+
+    Plotly.relayout("gauge", update);
 
   });
 }

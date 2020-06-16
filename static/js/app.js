@@ -233,7 +233,6 @@ function optionChanged(selectValue) {
     var radians = degrees * Math.PI / 180;
     var x = radius * Math.cos(radians) + 0.5;
     var y = radius * Math.sin(radians) + 0.5;
-    console.log(x, y, degrees, radians);
 
     var innerDegrees1 = degrees + 90;
     var innerDegrees2 = degrees - 90;

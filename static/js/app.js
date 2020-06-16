@@ -94,7 +94,7 @@ function init() {
       }
     }];
 
-    // Calculates the degree to use based on the hand washing frequency value.  
+    // Calculates the degree to use based on the belly button washing frequency value.  
     // Each value is 20 degrees so the value will be from 0 to 180 inclusive.
     // Center point of the circle is .5,.5 and has a radius of .3
     // Use the degree value to calculate radians which will be used along with sin and cos to determine x,y element of the value
@@ -118,7 +118,7 @@ function init() {
     var innerX1 = innerRadius * Math.cos(innerRadians2) + 0.5;
     var innerY1 = innerRadius * Math.sin(innerRadians2) + 0.5;
 
-    // Configures the pointer to the Hand Washing Frequency value
+    // Configures the pointer to the Belly Button Washing Frequency value
     // A small circle will be displayed around the .5,.5 point
     // Three lines will be used to create a triangle.  The first line is from the previous calculations to create a perpendicular line to the actual point.
     // The other two lines will connect to the value point from each of the two points on the small circle.

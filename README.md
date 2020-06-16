@@ -1,37 +1,41 @@
-## Welcome to GitHub Pages
+# Belly-Button-Biodiversity
 
-You can use the [editor on GitHub](https://github.com/nvanlangen/Belly-Button-Biodiversity/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## Initial Steps
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- Read in samples.json file that contained data for the plots
 
-### Markdown
+- Populated a dropdown list using Subject ID
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- Populated arrays of Values, OTU IDs, and OTU Descriptions for the first subject in the data
 
-```markdown
-Syntax highlighted code block
+## Created Horizontal Bar Chart
 
-# Header 1
-## Header 2
-### Header 3
+- Since the data was sorted in descending by value for each subject, used the slice method to get the top 10 Values, OTU IDs, and OTU Descriptions.
 
-- Bulleted
-- List
+- Reversed the arrays so they can be displayed with the greatest value at top of the horizontal bar chart
 
-1. Numbered
-2. List
+- Configured and plotted the chart
 
-**Bold** and _Italic_ and `Code` text
+## Created Bubble Chart
 
-[Link](url) and ![Image](src)
-```
+- Using the arrays generated in the initialization, created a bubble chart that displayed relative values for all OTUs for the subject.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+- Higher values were shown with larger circles and circles were colored using the OTU ID.
 
-### Jekyll Themes
+## Displayed Subject Metadata
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/nvanlangen/Belly-Button-Biodiversity/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+- Selected metadata from the data provided for the subject
 
-### Support or Contact
+- Traversed each key-value pair and displayed the information
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Created Gauge Chart
+
+- A gauge chart was created to show the hand washing frequency for a subject.
+
+- A pie chart was used to show the frequencies from 0 to 9 on the top half of the chart.  The bottom half of the chart was not used and was changed to white.  The hole attribute was used to create an empty half circle.  A small circle was created in the center of the pie chart and three coordinates were calculated to make a triangle pointer to the hand washing frequncy value.  The coordinates were calculated using sin and cos based on the angle needed to point to the value.
+
+## Selecting Different Subject ID
+
+- An event handler was used to redisplay the 4 charts above for the selected subject each time a new subject was selected.
+
+

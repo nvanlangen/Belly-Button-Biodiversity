@@ -32,7 +32,7 @@
 
 - A gauge chart was created to show the hand washing frequency for a subject.
 
-- A pie chart was used to show the frequencies from 0 to 9 on the top half of the chart.  The bottom half of the chart was not used and was changed to white.  The hole attribute was used to create an empty half circle.  A small circle was created in the center of the pie chart and three coordinates were calculated to make a triangle pointer to the hand washing frequncy value.  The coordinates were calculated using sin and cos based on the angle needed to point to the value.
+- A pie chart was used to show the frequencies from 0 to 9 on the top half of the chart.  The bottom half of the chart was not used and was changed to white.  The hole attribute was used to create an empty half circle.  A small circle was created in the center of the pie chart and three coordinates were calculated to make a triangle pointer to the hand washing frequency value.  The coordinates were calculated using sin and cos based on the angle needed to point to the value.
 
 ## Selecting Different Subject ID
 
